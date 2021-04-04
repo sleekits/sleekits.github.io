@@ -1,3 +1,19 @@
+---
+title:  "Introducing strategy optimization"
+header:
+  image: /assets/images/candle-stick-chart.jpg
+  overlay_filter: 0.5
+  caption: "Photo credit: [**Unsplash**](https://unsplash.com)"  
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "cog"
+categories: 
+  - Jekyll
+tags:
+  - strategy
+  - optimization
+---
+
 # Introducing the Sleekits Strategy Optimization
 
 *By Sleekits*
