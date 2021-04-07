@@ -1,17 +1,18 @@
 ---
-title:  "Introducing strategy optimization"
+#title:  "Posts"
+layout: category
+taxonomy: blog
+permalink: /blog
+author_profile: false
+comments: false
+
 header:
-  image: /assets/images/candle-stick-chart.jpg
-  overlay_filter: 0.5
-  caption: "Photo credit: [**Unsplash**](https://unsplash.com)"  
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "cog"
-categories: 
-  - Jekyll
-tags:
-  - strategy
-  - optimization
+  overlay_color: "#141010"
+  overlay_filter: "0.7"
+  overlay_image: /assets/images/blog.jpg
+  caption: "By [freepik](https://www.freepik.com/vectors/background)"
+excerpt: ""
+
 ---
 
 # Introducing the Sleekits Strategy Optimization
