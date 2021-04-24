@@ -31,23 +31,39 @@ Ideas to develop:
 
 ## Strategy Layer
 
-What’s my downside? What’s my upside? What’s the probability I get said downside vs. said upside?
-Momentum vs Mean-Reversion
-Technical analysis
+* what is a strategy?
+* how someone can create, evaluate and profit from one?
+* Relevant or popular technical indicators
+* how do we know it is a good strategy?
+* once the strategy works, what do we do with it?
+* type of strategies: momentum, mean-reversion, conservative, single assest vs basket of assets
+* scope and limitations: daily, scalping, etc
 
-* Chart Patterns \(head and shoulders, ascending triangle, etc\)
-* Support/Resistance zones
-* Technical Indicators \(SMA, MACD, RSI etc\)
 
 ## Service Layer
 
-@overider
+@overrider
 
 
 ## Optimization Layer
 
+### Data Acquisition
 
-Machine learning, genetic algorithms and numerical optimization.
+The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy is: net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The sleekits team has developed a software solution to perform the data acquisition model shown in the figure below. The solution collects the inputs that define the strategy for a target asset (e.g. BTC) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
+
+<figure class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-data-acquisition.png" alt="">
+  <figcaption>Data Acquisition Model</figcaption>
+</figure> 
+
+
+### Numerical Optimization
+
+Genetic algorithms and numerical optimization. 
+
+### Testing
+
+Data sets for modeling and for testing
 
 
 # Case Study
