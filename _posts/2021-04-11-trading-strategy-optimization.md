@@ -12,7 +12,7 @@ header:
 excerpt: ''
 ---
 
-# Sleekits Algorithmic Trading
+# Trading Strategy Background
 
 Ideas to develop:
 
@@ -22,6 +22,8 @@ Ideas to develop:
 4. Quantitative trading is the single best source of semi-passive wealth accumulation
 5. From discretionary investing towards a diversified Quant approach.
 
+
+## Sleekits Approach
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-service-architecture.png" alt="">
@@ -49,17 +51,21 @@ Ideas to develop:
 
 ### Data Acquisition
 
-The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy is: net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The sleekits team has developed a software solution to perform the data acquisition model shown in the figure below. The solution collects the inputs that define the strategy for a target asset (e.g. BTC) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
+The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy is: net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The sleekits team has developed a Robotic Process Automation (RPA) Solution to perform the data acquisition model shown in the figure below. The RPA solution collects the inputs that define the strategy for a target asset (e.g. BTC) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-data-acquisition.png" alt="">
   <figcaption>Data Acquisition Model</figcaption>
 </figure> 
 
+### ML Modeling
+
+images of coefficients, example of strategy analysis
+
 
 ### Numerical Optimization
 
-Genetic algorithms and numerical optimization. 
+Genetic algorithms and search optimization
 
 ### Testing
 
@@ -67,6 +73,8 @@ Data sets for modeling and for testing
 
 
 # Case Study
+
+* @rvgomes: review Fancy Bollinger Bands by BigBitsIO
 
 ## Crypto Strategy
 
@@ -76,7 +84,7 @@ Data sets for modeling and for testing
 
 ## Forex Strategy
 
-* [N2](https://www.tradingview.com/script/vObmEraY-Open-Close-Cross-Strategy-R5-revised-by-JustUncleL/): based on the popular **Open-Close-Cross-Strategy-R5-revised-by-JustUncleL**originally used for the ticker `USDCAD/FX`.
+* [N2](https://www.tradingview.com/script/vObmEraY-Open-Close-Cross-Strategy-R5-revised-by-JustUncleL/): based on the popular **Open-Close-Cross-Strategy-R5-revised-by-JustUncleL** originally used for the ticker `USDCAD/FX`.
 
 ## Stocks Strategy
 
