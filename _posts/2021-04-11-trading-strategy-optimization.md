@@ -51,21 +51,41 @@ Ideas to develop:
 
 ### Data Acquisition
 
-The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy is: net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The sleekits team has developed a Robotic Process Automation (RPA) Solution to perform the data acquisition model shown in the figure below. The RPA solution collects the inputs that define the strategy for a target asset (e.g. BTC) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
+The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy performs in back testing using net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The sleekits team has developed a Robotic Process Automation (RPA) Solution to perform the data acquisition model shown in the figure below. The RPA solution collects the inputs that define the strategy for a target asset (e.g. BTC, Tesla, etc) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-data-acquisition.png" alt="">
   <figcaption>Data Acquisition Model</figcaption>
 </figure> 
 
+The figure illustrates that a trading strategy can be thought as a collection of interconnected layers of inputs (floats, boolean, etc), which produce a set of outputs that quantify the performance. These two sets of data can be stored and manipulated using data science tools to extract insights regarding the trading strategy.
+
+
 ### ML Modeling
 
-images of coefficients, example of strategy analysis
+The ML modeling performed over the data helps us to understand the relationship between the inputs and the KPIs.
+The model is constrained to the granularity of the data and the time frame it represents.
+Therefore, our methodology analyzes the quality of the model, the magnitude of the coefficients (inputs) and the overall stability of the trading strategy.
+
+An example of ML modeling for a momentum strategy for ETH is illustrted in the figure below, where the weighted profit factor (WPF) is defined as a function of the inputs. 
+
+The coefficient of determination **R2** measures how well the real values fit the prediction of the model. 
+In our example, about 88% of the WPF can be explained by a given set of inputs. It is worth noting that the ML model in this example contains more than 50 inputs, but the figure shows only the most important inputs regarding to the ML model's coefficients magnitudes. The information that we require to initialize the optimization algorithms lies in the coefficients and their characteristics. The linear ML model reveals that an increment of one unit of *input-17* results in an increment about 300 units in the WPF. Similar analysis can done for the rest of the coefficients. For this example our objective is to maximize the WPF subject to a set of constraints defined by the range of operation of each input.
+
+<figure class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-ml-coefficients.png" alt="">
+  <figcaption>Largest Coefficients in the ML Model</figcaption>
+</figure> 
 
 
 ### Numerical Optimization
 
 Genetic algorithms and search optimization
+
+<figure class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-search-optimization.png" alt="">
+  <figcaption>Sleekits Search Optimization Approach</figcaption>
+</figure> 
 
 ### Testing
 
