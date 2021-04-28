@@ -58,19 +58,17 @@ The raw material for Machine Learning is data, which is defined by the  key perf
   <figcaption>Data Acquisition Model</figcaption>
 </figure> 
 
-The figure illustrates that a trading strategy can be thought as a collection of interconnected layers of inputs (floats, boolean, etc), which produce a set of outputs that quantify the performance. These two sets of data can be stored and manipulated using data science tools to extract insights regarding the trading strategy.
+The figure illustrates that a trading strategy can be thought as a collection of interconnected layers of inputs (floats, boolean, etc), which produce a set of outputs that quantify the performance (KPIs). These two sets of data can be stored and manipulated using data science tools to extract strategy insights.
 
 
 ### ML Modeling
 
 The ML modeling performed over the data helps us to understand the relationship between the inputs and the KPIs.
 The model is constrained to the granularity of the data and the time frame it represents.
-Therefore, our methodology analyzes the quality of the model, the magnitude of the coefficients (inputs) and the overall stability of the trading strategy.
+Therefore, our methodology analyzes the quality of the model, the magnitude of the coefficients associated with each inputs and the overall stability.
 
-An example of ML modeling for a momentum strategy for ETH is illustrted in the figure below, where the weighted profit factor (WPF) is defined as a function of the inputs. 
-
-The coefficient of determination **R2** measures how well the real values fit the prediction of the model. 
-In our example, about 88% of the WPF can be explained by a given set of inputs. It is worth noting that the ML model in this example contains more than 50 inputs, but the figure shows only the most important inputs regarding to the ML model's coefficients magnitudes. The information that we require to initialize the optimization algorithms lies in the coefficients and their characteristics. The linear ML model reveals that an increment of one unit of *input-17* results in an increment about 300 units in the WPF. Similar analysis can done for the rest of the coefficients. For this example our objective is to maximize the WPF subject to a set of constraints defined by the range of operation of each input.
+An example of ML modeling for a momentum strategy for ETH is illustrted in the figure below, where the weighted profit factor (WPF) is defined as a function of the inputs. The coefficient of determination **R2** measures how well the real values fit the prediction of the model. 
+In our example, R2 ~ 88% of the WPF can be explained by a given set of inputs. It is worth noting that the ML model in this example contains more than 50 inputs, but the figure shows only the most important ones sorted by magnitude. The information that we require to initialize the optimization algorithms lies in the coefficients and their characteristics. The linear ML model reveals that an increment of one unit of *input-17* results in an increment about 300 units in the WPF. Similar analysis can done for the rest of the coefficients.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-ml-coefficients.png" alt="">
@@ -80,7 +78,7 @@ In our example, about 88% of the WPF can be explained by a given set of inputs. 
 
 ### Numerical Optimization
 
-Genetic algorithms and search optimization
+In the  momentum strategy for ETH, our objective is to maximize the WPF subject to a set of constraints defined by the range of operation of each input. The RPA solution not only acquires the data but also provide a set of anchoring points in the inputs universe for which the WPF has a local maximum value. In the heat map below every point represents a (inputs, KPIs) tuple. Two KPIs are used to visualize the performance of each tuple, namely the profit factor and the percentage of profitability. Additionally, the figure shows the anchors used in the data acquisition stage which define the fastest optimization path to maximize the WPF.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-search-optimization.png" alt="">
