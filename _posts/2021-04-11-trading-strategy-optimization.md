@@ -12,7 +12,7 @@ header:
 excerpt: ''
 ---
 
-# Trading Strategy Background
+# Introduction
 
 Ideas to develop:
 
@@ -21,14 +21,6 @@ Ideas to develop:
 3. new traders with few time to migrate their strategies to code
 4. Quantitative trading is the single best source of semi-passive wealth accumulation
 5. From discretionary investing towards a diversified Quant approach.
-
-
-## Sleekits Approach
-
-<figure class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-service-architecture.png" alt="">
-  <figcaption>Sleekits Service Architecture</figcaption>
-</figure> 
 
 
 ## Strategy Layer
@@ -42,9 +34,16 @@ Ideas to develop:
 * scope and limitations: daily, scalping, etc
 
 
-## Service Layer
+# Automated Trading Architecture
 
-@overrider
+The Sleekits team is developing a set of tools to automate tasks at each stage of a trading operation, as shown in the figure below.
+The first stage in our automation framework is given by the **Strategy Layer**, which defines the technical indicators that generate the buy-sell signals. This layer also includes the rules for capital and risk allocation, depending on the traded assest.
+The **Service Layer** is in charge of receiving the signals, executing the orders and managing the multiple accounts with brokers and exchanges. The last component of the architecture is the **Optimization Layer**, which includes automated tasks for generating, storing and analyzing the data produced by the implemented strategy. In this post we will focus on the latter layer, providing an overview of its main components and promising results for any trader.
+
+<figure class="align-center">
+  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-service-architecture.png" alt="">
+  <figcaption>Sleekits Automated Trading Architecture</figcaption>
+</figure> 
 
 
 ## Optimization Layer
@@ -85,9 +84,8 @@ In the  momentum strategy for ETH, our objective is to maximize the WPF subject 
   <figcaption>Sleekits Search Optimization Approach</figcaption>
 </figure> 
 
-### Testing
+For some trading strategies the inner layer structures are too complex to converge to the global maximum using a ML Model based search approach. An optimization method inspired in genetic algorithms has been implemented to handle such kind of complex strategies.
 
-Data sets for modeling and for testing
 
 
 # Case Study
