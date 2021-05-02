@@ -14,6 +14,8 @@ excerpt: ''
 
 # Introduction
 
+By ECastaneda
+
 Ideas to develop:
 
 1. Algorithmic trading \(algo-trading\) is an automated system for executing market orders, based on pre-programmed trading commands or specifications
@@ -36,9 +38,9 @@ Ideas to develop:
 
 # Automated Trading Architecture
 
-The Sleekits team is developing a set of tools to automate tasks at each stage of a trading operation, as shown in the figure below.
-The first stage in our automation framework is given by the **Strategy Layer**, which defines the technical indicators that generate the buy-sell signals. This layer also includes the rules for capital and risk allocation, depending on the traded assest.
-The **Service Layer** is in charge of receiving the signals, executing the orders and managing the multiple accounts with brokers and exchanges. The last component of the architecture is the **Optimization Layer**, which includes automated tasks for generating, storing and analyzing the data produced by the implemented strategy. In this post we will focus on the latter layer, providing an overview of its main components and promising results for any trader.
+The Sleekits team is developing a set of tools to automate tasks at each stage of a trading operation. The figure below illustrates how such tools are interconnected as well as their components.
+The first stage in our automation framework is given by the **Strategy Layer**, which defines the technical indicators that generate the buy-sell signals. This layer also includes the rules for capital and risk allocation, depending on the traded assest and the expected operation period (hours, days, weeks).
+The **Service Layer** is in charge of receiving the signals, executing the orders and managing the multiple accounts with brokers and exchanges. The last component of the architecture is the **Optimization Layer**, which includes automated tasks for generating, storing and analyzing the data produced by the implemented strategy. In this post we will focus on the latter layer, providing an overview of both, its main components and promising results.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-service-architecture.png" alt="">
@@ -50,24 +52,26 @@ The **Service Layer** is in charge of receiving the signals, executing the order
 
 ### Data Acquisition
 
-The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy performs in back testing using net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The sleekits team has developed a Robotic Process Automation (RPA) Solution to perform the data acquisition model shown in the figure below. The RPA solution collects the inputs that define the strategy for a target asset (e.g. BTC, Tesla, etc) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
+The raw material for Machine Learning is data, which is defined by the  key performance indicators (KPIs) produced by a trading strategy over a given period. Several trading platforms, such as [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), provide a set of [indicators](https://www.tradingview.com/support/solutions/43000561856-how-are-strategy-tester-report-values-calculated-and-what-do-they-mean/) to assess how effective your strategy performs in back testing using net profit, percent profitable, profit factor and the like. All these KPIs help us to quantify the strategy outcome over time for a particular asset. We can combine the inputs' value with the KPIs to produce a predictive ML model, assess the stability of the strategy and optimize the performance. The Sleekits team has developed a Robotic Process Automation (RPA) Solution to perform the data acquisition model shown in the figure below. The RPA solution collects the inputs that define the strategy for a target asset (e.g. BTC, Tesla, etc) and the resulting KPIs from the strategy execution over a testing period. The data acquisiton solution can be configured to run automatically for a predefined number of times or until a stop criterion is reached.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-data-acquisition.png" alt="">
   <figcaption>Data Acquisition Model</figcaption>
 </figure> 
 
-The figure illustrates that a trading strategy can be thought as a collection of interconnected layers of inputs (floats, boolean, etc), which produce a set of outputs that quantify the performance (KPIs). These two sets of data can be stored and manipulated using data science tools to extract strategy insights.
+The figure shows how a trading strategy can be thought as a collection of interconnected layers of inputs (floats, boolean, etc), which produce a signal to sell, buy or hold the asset. Such signals generate a set of outputs that quantify the performance (KPIs). The inputs and KPIs are stored and manipulated using data science tools to extract strategy insights.
 
 
 ### ML Modeling
 
-The ML modeling performed over the data helps us to understand the relationship between the inputs and the KPIs.
+The ML modeling applied over the data helps us to understand the relationship between the inputs, the KPIs and the cost function under optimization.
 The model is constrained to the granularity of the data and the time frame it represents.
-Therefore, our methodology analyzes the quality of the model, the magnitude of the coefficients associated with each inputs and the overall stability.
+Therefore, our methodology analyzes the quality of the model, the magnitude of the coefficients associated with each input and the overall stability.
 
 An example of ML modeling for a momentum strategy for ETH is illustrted in the figure below, where the weighted profit factor (WPF) is defined as a function of the inputs. The coefficient of determination **R2** measures how well the real values fit the prediction of the model. 
-In our example, R2 ~ 88% of the WPF can be explained by a given set of inputs. It is worth noting that the ML model in this example contains more than 50 inputs, but the figure shows only the most important ones sorted by magnitude. The information that we require to initialize the optimization algorithms lies in the coefficients and their characteristics. The linear ML model reveals that an increment of one unit of *input-17* results in an increment about 300 units in the WPF. Similar analysis can done for the rest of the coefficients.
+In our example, R2 ~ 88% of the WPF can be explained by a given set of inputs. It is worth noting that the ML model in this example contains more than 50 inputs, but the figure shows only the most important ones sorted by magnitude. 
+
+The information that we require to initialize the optimization algorithms lies in the coefficients and their characteristics. For instance, the linear ML model reveals that an increment of one unit of *input-17* results in an increment about 300 units in the WPF. Similar analysis is done for the rest of the coefficients to determine the stability of the strategy, the implicit constraints each input imposes to the KPIs and the set of inputs or conditions that do not provide an edge to the strategy.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-ml-coefficients.png" alt="">
@@ -77,20 +81,18 @@ In our example, R2 ~ 88% of the WPF can be explained by a given set of inputs. I
 
 ### Numerical Optimization
 
-In the  momentum strategy for ETH, our objective is to maximize the WPF subject to a set of constraints defined by the range of operation of each input. The RPA solution not only acquires the data but also provide a set of anchoring points in the inputs universe for which the WPF has a local maximum value. In the heat map below every point represents a (inputs, KPIs) tuple. Two KPIs are used to visualize the performance of each tuple, namely the profit factor and the percentage of profitability. Additionally, the figure shows the anchors used in the data acquisition stage which define the fastest optimization path to maximize the WPF.
+In the  momentum strategy for ETH in the example, our objective is to maximize the WPF subject to a set of constraints defined by the range of operation of each input. The RPA solution not only acquires the data but also provides a set of anchoring points in the inputs universe for which the WPF has a local maximum value. In the heat map below every point represents a tuple: (inputs, KPIs, WPF). In the figure, two KPIs are used to visualize the performance of each tuple, namely the profit factor and the percentage of profitability. Additionally, the figure shows the anchors used in the data acquisition stage which define the fastest optimization path to maximize the WPF.
 
 <figure class="align-center">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/sleekits-search-optimization.png" alt="">
   <figcaption>Sleekits Search Optimization Approach</figcaption>
 </figure> 
 
-For some trading strategies the inner layer structures are too complex to converge to the global maximum using a ML Model based search approach. An optimization method inspired in genetic algorithms has been implemented to handle such kind of complex strategies.
-
-
+For some trading strategies the inner layer structures are too complex to converge to the global maximum using tools such as a linear ML Model. An optimization method inspired by the genetic algorithms has been implemented to handle such kind of complex strategies. The fundamental idea is to collect a represtative set of (inputs, KPIs, Cost Function) tuples. From this first generation of tuples the inputs that produce the best cost function values will be combine to create a new set of inputs. Such a new generation of inputs will have some KPIs and cost function values from which a new generation of inputs will be created. Such an iterative process provides insightful data about the strategies.
 
 # Case Study
 
-* @rvgomes: review Fancy Bollinger Bands by BigBitsIO
+In this section we present results of our optimization approach with three popular strategies. Each strategy targets a different asset type: crypto, currencies and stocks.
 
 ## Crypto Strategy
 
@@ -138,5 +140,6 @@ We have developed a strategy ...
 
 ## Follow up
 
-We recently rolled out a bunch of new features and UI changes, and we value speaking with as many new customers as possible to make sure we are on the right track.
+The Sleekits team is woking to launch an alpha service for testing and optimizing trading strategies.
+Currently we are only working with strategies developed in [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), so if you are a trader with curiosity and interest about improving your strategies please drop us a line to admin@sleekits.com.
 
