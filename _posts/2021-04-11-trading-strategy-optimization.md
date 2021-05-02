@@ -14,15 +14,12 @@ excerpt: ''
 
 # Introduction
 
-By ECastaneda
+*By ECastaneda*
 
-Ideas to develop:
+Main Ideas
 
-1. Algorithmic trading \(algo-trading\) is an automated system for executing market orders, based on pre-programmed trading commands or specifications
-2. robotic process automation
-3. new traders with few time to migrate their strategies to code
-4. Quantitative trading is the single best source of semi-passive wealth accumulation
-5. From discretionary investing towards a diversified Quant approach.
+Quantitative trading is the single best source of semi-passive wealth accumulation
+From discretionary investing towards a diversified Quant approach.
 
 
 ## Strategy Layer
@@ -92,17 +89,41 @@ For some trading strategies the inner layer structures are too complex to conver
 
 # Case Study
 
-In this section we present results of our optimization approach with three popular strategies. Each strategy targets a different asset type: crypto, currencies and stocks.
+In this section we present results of our optimization approach with three popular strategies. Each strategy targets a different asset type: crypto, currencies and stocks. Note that what we are proposing here is the first step to assess and optimize a strategy. Further analysis will be required to understand the fitness of each particular strategy regarding its target asset, the selected time frame and the reliability over time.
 
 ## Crypto Strategy
 
-* [N1](https://www.tradingview.com/script/RJBjyl2W-Ichimoku-Daily-Candle-X-HULL-MA-X-MacD/): based on the popular **Ichimoku-Daily-Candle-X-HULL-MA-X-MacD** strategy originally used for the ticker `ETHBTC/BITSTAMP`.
+The first strategy we have optimized is the popular [Ichimoku-Daily-Candle-X-HULL-MA-X-MacD](https://www.tradingview.com/script/RJBjyl2W-Ichimoku-Daily-Candle-X-HULL-MA-X-MacD/) originally applied to the ticker `ETHBTC/BITSTAMP`. The reference performance summary is shown in the figure below, where the percent profitable is about 52% and the profit factor is above 2.3.
 
-![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/N1/N1_ETHBTC_BITSTAMP_profit_factor_7.png){: .align-center}
+![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/N1/original_performance.png){: .align-center}
+
+The optimized parametrization produced the following results: about 64% profitable and a profit factor above 4.2. In terms of net profit the optimization achieves 636% improvement, compared to the original parametrization.
+
+![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/N1/optimized_performance.png){: .align-center}
+
+To reproduce the results in [TradingView](https://www.tradingview.com/gopro/?share_your_love=sleekits), with reference date May 1st 2021, set the strategy inputs as follows:
+
+* `Double HullMA X Period`: 12
+* `Candle X Resolution`: 1 day
+* `Source of price`: open
+* `conversion line period`: 8
+* `base line period`: 39
+* `lagging span 2 period`: 52
+* `displacement`: 26
+* `MACD_length`: 2
+* `MACD_fastlength`: 11
+* `MACD_slowlength`: 26
+
 
 ## Forex Strategy
 
-* [N2](https://www.tradingview.com/script/vObmEraY-Open-Close-Cross-Strategy-R5-revised-by-JustUncleL/): based on the popular **Open-Close-Cross-Strategy-R5-revised-by-JustUncleL** originally used for the ticker `USDCAD/FX`.
+The selected forex startegy is the [Open-Close-Cross-Strategy-R5-revised-by-JustUncleL](https://www.tradingview.com/script/vObmEraY-Open-Close-Cross-Strategy-R5-revised-by-JustUncleL/) originally applied to the ticker `USDCAD/FXCM` with a 15 minute time frame. The reference performance summary is shown in the figure below.
+
+![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/N2/original_performance.png){: .align-center}
+
+The optimized performance prioritizing the profit factor is shown below
+![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/strategy-optimization/N2/optimized_performance.png){: .align-center}
+
 
 ## Stocks Strategy
 
